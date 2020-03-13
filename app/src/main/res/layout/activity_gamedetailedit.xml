@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_gamedetailedit"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollview_edit"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintlayout_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_editdetail_players"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Number of Players"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/edittext_editdetail_name" />
+
+            <CheckBox
+                android:id="@+id/checkbox_editdetail_gm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Game Master"
+                app:layout_constraintEnd_toStartOf="@+id/checkbox_editdetail_paper"
+                app:layout_constraintTop_toBottomOf="@+id/checkbox_editdetail_coins" />
+
+            <CheckBox
+                android:id="@+id/checkbox_editdetail_paper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="Paper"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/checkbox_editdetail_coins" />
+
+            <CheckBox
+                android:id="@+id/checkbox_editdetail_coins"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Coins"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_req" />
+
+            <EditText
+                android:id="@+id/edittext_editdetail_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textview_editdetail_req"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Requirements"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/ratingbar_editdetail_rating" />
+
+            <TextView
+                android:id="@+id/textview_editdetail_rules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:text="Rules"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/edittext_editdetail_obj" />
+
+            <EditText
+                android:id="@+id/edittext_editdetail_min"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:ems="10"
+                android:hint="Minimum"
+                android:inputType="number"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_players" />
+
+            <CheckBox
+                android:id="@+id/checkbox_editdetail_dice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Dice"
+                app:layout_constraintStart_toEndOf="@+id/checkbox_editdetail_coins"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_req" />
+
+            <CheckBox
+                android:id="@+id/checkbox_editdetail_cards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Cards"
+                app:layout_constraintEnd_toStartOf="@+id/checkbox_editdetail_coins"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_req" />
+
+            <EditText
+                android:id="@+id/edittext_editdetail_max"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="10"
+                android:hint="Maximum"
+                android:inputType="number"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_players" />
+
+            <RatingBar
+                android:id="@+id/ratingbar_editdetail_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_rating" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_vertical_middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/textview_editdetail_obj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:layout_marginEnd="8dp"
+                android:text="Objective"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/checkbox_editdetail_coins" />
+
+            <TextView
+                android:id="@+id/textview_editdetail_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="84dp"
+                android:layout_marginEnd="8dp"
+                android:text="Rating"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical_middle"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_players" />
+
+            <EditText
+                android:id="@+id/edittext_editdetail_obj"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="Objective"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_obj" />
+
+            <EditText
+                android:id="@+id/edittext_editdetail_rules"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:hint="Rules"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textview_editdetail_rules" />
+
+            <Button
+                android:id="@+id/button_editdetail_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="Save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edittext_editdetail_rules" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
