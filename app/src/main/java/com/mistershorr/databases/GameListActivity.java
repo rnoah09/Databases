@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,7 @@ import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.backendless.Backendless;
 import com.backendless.async.callback.AsyncCallback;
@@ -34,6 +36,8 @@ import com.backendless.persistence.DataQueryBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
@@ -120,12 +124,6 @@ public class GameListActivity extends AppCompatActivity {
         String ownerId = Backendless.UserService.CurrentUser().getObjectId();
         String whereClause = "ownerId = '"+ ownerId + "'";
 
-        // if (editTextSearch.getText().toString().isEmpty() == false){
-        //  whereClause = whereClause + "and name LIKE '%"+ editTextSearch.getText().toString() + "%'";
-        // }
-        // if (editTextPlayerSearch.getText().toString().isEmpty() == false){
-        // whereClause = whereClause + " and minPlayer <= "+ editTextPlayerSearch.getText().toString() + " and maxPlayer >=" + editTextPlayerSearch.getText().toString();
-        // }
 
         Log.d("whereClause", whereClause);
 
@@ -154,6 +152,77 @@ public class GameListActivity extends AppCompatActivity {
         editTextSearch = findViewById(R.id.edittext_gamelist_search);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.gamelist_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.item_gamelist_minplayers:
+                sortByMinPlayers();
+                return true;
+            case R.id.item_gamelist_name:
+                sortByName();
+                return true;
+            case R.id.item_gamelist_maxplayers:
+                sortByMaxPlayers();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void sortByMinPlayers(){
+        Collections.sort(gameAdapter.gamesList, new Comparator<Game>() {
+            @Override
+            public int compare(Game game, Game t1) {
+                int game1 = game.getMinPlayer();
+                int game2 = t1.getMinPlayer();
+
+                if (game1 > game2){
+                    return 1;
+                }
+                else if (game1 < game2){
+                    return -1;
+                }
+                return 0;
+            }
+        });
+        gameAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Sorted by Min Players", Toast.LENGTH_SHORT).show();
+    }
+
+    public void sortByMaxPlayers(){
+        Collections.sort(gameAdapter.gamesList, new Comparator<Game>() {
+            @Override
+            public int compare(Game game, Game t1) {
+                int game1 = game.getMaxPlayer();
+                int game2 = t1.getMaxPlayer();
+
+                if (game1 > game2){
+                    return 1;
+                }
+                else if (game1 < game2){
+                    return -1;
+                }
+                return 0;
+            }
+        });
+        gameAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Sorted by Max Players", Toast.LENGTH_SHORT).show();
+    }
+
+    public void sortByName(){
+        Collections.sort(gameAdapter.gamesList);
+        gameAdapter.notifyDataSetChanged();
+        Toast.makeText(this, "Sorted by Name", Toast.LENGTH_SHORT).show();
+    }
+
     public void setListeners(){
         gameListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -174,10 +243,6 @@ public class GameListActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: SEARCH
-        // TODO: SEARCH
-        // TODO: SEARCH
-
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -186,23 +251,7 @@ public class GameListActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                gameAdapter.getFilter().filter(s);
-//                if(!editTextSearch.getText().toString().isEmpty()){
-//                    gameAdapter.gamesList.clear();
-//                    for(Game g: fullGameList){
-//                        if(g.getName().contains(s.toString())){
-//                            gameAdapter.gamesList.add(g);
-//                            Log.d("SEARCHING", "onTextChanged: " + g.toString() + " found");
-//                        }
-//                    }
-//                    gameAdapter.notifyDataSetChanged();
-//                    // backendlessUpdate();
-//                }
-//                else{
-//                    gameAdapter.gamesList = new ArrayList<>(fullGameList);
-//                    gameAdapter.notifyDataSetChanged();
-//                }
-//                Log.d("SEARCHING", "onTextChanged: " + gameAdapter.gamesList.toString());
+                gameAdapter.getFilter().filter(s.toString());
 
             }
 
@@ -219,25 +268,7 @@ public class GameListActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                gameAdapter.getFilter().filter(s);
-
-//                if (!editTextPlayerSearch.getText().toString().isEmpty()){
-//                    gameAdapter.gamesList.clear();
-//                    for(Game g: fullGameList){
-//                        if(g.getMinPlayer() <= parseInt(s.toString()) && g.getMaxPlayer() >= parseInt(s.toString())){
-//                            gameAdapter.gamesList.add(g);
-//                        }
-//                        gameAdapter.notifyDataSetChanged();
-//                    }
-//                    //  backendlessUpdate();
-//                }
-//                else{
-//                    gameAdapter.gamesList = new ArrayList<Game>(fullGameList);
-//                    gameAdapter.notifyDataSetChanged();
-//                }
-                // loop through the full list and add to the gameAdapter.gamesList
-                // add from the full list
-                // notify data set changed
+                gameAdapter.getFilter().filter(s.toString());
 
             }
 
@@ -287,7 +318,7 @@ public class GameListActivity extends AppCompatActivity {
             TextView textViewPlayerCount = convertView.findViewById(R.id.textview_gameitem_playercount);
             RatingBar ratingBar = convertView.findViewById(R.id.ratingbar_gameitem_rating);
 
-            Game game = gamesList.get(position);
+            Game game = filteredData.get(position);
             textViewName.setText(game.getName());
             if (game.getMaxPlayer() == game.getMinPlayer()){
                 textViewPlayerCount.setText("" + game.getMinPlayer());
@@ -332,8 +363,7 @@ public class GameListActivity extends AppCompatActivity {
                     results.values = nlist;
                     results.count = nlist.size();
                 }
-
-                if (!editTextPlayerSearch.getText().toString().isEmpty() && editTextSearch.getText().toString().isEmpty()){
+                else if (!editTextPlayerSearch.getText().toString().isEmpty() && editTextSearch.getText().toString().isEmpty()){
                     int filterGameInt = parseInt(constraint.toString());
 
                     for (int i = 0; i < count; i++) {
@@ -346,8 +376,7 @@ public class GameListActivity extends AppCompatActivity {
                     results.values = nlist;
                     results.count = nlist.size();
                 }
-
-                if (!editTextSearch.getText().toString().isEmpty() && !editTextPlayerSearch.getText().toString().isEmpty()){
+                else if (!editTextSearch.getText().toString().isEmpty() && !editTextPlayerSearch.getText().toString().isEmpty()){
                     int filterGameInt = parseInt(constraint.toString());
                     String filterGameString = constraint.toString().toLowerCase();
 
@@ -360,6 +389,10 @@ public class GameListActivity extends AppCompatActivity {
 
                     results.values = nlist;
                     results.count = nlist.size();
+                }
+                else{
+                    results.values = list;
+                    results.count = list.size();
                 }
 
                 return results;

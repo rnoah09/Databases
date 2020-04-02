@@ -3,7 +3,7 @@ package com.mistershorr.databases;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Game implements Parcelable {
+public class Game implements Parcelable, Comparable<Game> {
 
     private String name;
     private String objective;
@@ -176,4 +176,23 @@ public class Game implements Parcelable {
             return new Game[size];
         }
     };
+
+    //TODO: SORTING
+    //TODO: SORTING
+    //TODO: SORTING
+    //TODO: SORTING
+    //TODO: SORTING
+
+    @Override
+    public int compareTo(Game game) {
+        String game1 = game.getName().toUpperCase();
+
+        if(name.compareTo(game1) > 0){
+            return 1;
+        }
+        else if (name.compareTo(game1) < 0){
+            return -1;
+        }
+        return 0;
+    }
 }

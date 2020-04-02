@@ -3,8 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_gamelist_players"
-        android:title="Sort by Ranking" />
+        android:id="@+id/item_gamelist_minplayers"
+        android:title="Sort by Minimum" />
+    <item
+        android:id="@+id/item_gamelist_maxplayers"
+        android:title="Sort by Maximum" />
     <item
         android:id="@+id/item_gamelist_name"
         android:title="Sort by Name" />
