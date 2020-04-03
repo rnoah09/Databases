@@ -187,10 +187,10 @@ public class Game implements Parcelable, Comparable<Game> {
     public int compareTo(Game game) {
         String game1 = game.getName().toUpperCase();
 
-        if(name.compareTo(game1) > 0){
+        if(name.toUpperCase().compareTo(game1) > 0){
             return 1;
         }
-        else if (name.compareTo(game1) < 0){
+        else if (name.toUpperCase().compareTo(game1) < 0){
             return -1;
         }
         return 0;

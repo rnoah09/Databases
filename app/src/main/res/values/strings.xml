@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Databases</string>
+    <string name="app_name">Party Games</string>
     <string name="login_create_account">Create Account</string>
     <string name="login">Login</string>
     <string name="password">Password</string>

@@ -1,10 +1,13 @@
 package com.mistershorr.databases;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +40,35 @@ public class LoginActivity extends AppCompatActivity {
 
         wireWidgets();
         setListeners();
+
+        Intent lastIntent = getIntent();
+        String username = lastIntent.getStringExtra(GameListActivity.EXTRA_USERNAME);
+        if (username != null){
+            editTextUsername.setText(username);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+        builder.setMessage("Exit Party Games?")
+                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        finishProgram();
+                    }
+                })
+                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+
+        builder.create().show();
+    }
+
+    public void finishProgram(){
+        this.finishAffinity();
     }
 
     private void setListeners() {
@@ -50,10 +82,8 @@ public class LoginActivity extends AppCompatActivity {
         textViewCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO replace create account startActivity with startActivityForResult
                 Intent createAccountIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 createAccountIntent.putExtra(EXTRA_USERNAME, editTextUsername.getText().toString());
-                //startActivity(createAccountIntent);
                 startActivityForResult(createAccountIntent, REQUEST_CREATE_ACCOUNT);
             }
         });

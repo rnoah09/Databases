@@ -51,6 +51,7 @@ public class GameListActivity extends AppCompatActivity {
     private EditText editTextPlayerSearch;
     public static final String EXTRA_GAME = "game";
     public static final String EXTRA_CREATE = "";
+    public static final String EXTRA_USERNAME = "login username";
     private GameAdapter gameAdapter;
 
     @Override
@@ -81,7 +82,9 @@ public class GameListActivity extends AppCompatActivity {
         builder.setMessage("Return to Login?")
                 .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        GameListActivity.super.onBackPressed();
+                        Intent targetIntent = new Intent(GameListActivity.this, LoginActivity.class);
+                        targetIntent.putExtra(EXTRA_USERNAME, Backendless.UserService.CurrentUser().getProperty("username").toString());
+                        startActivity(targetIntent);
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
@@ -98,10 +101,11 @@ public class GameListActivity extends AppCompatActivity {
     public void onBackPressed() {
             AlertDialog.Builder builder = new AlertDialog.Builder(GameListActivity.this);
 
-            builder.setMessage("Leave without saving?")
+            builder.setMessage("Return to Login?")
                     .setPositiveButton("Logout", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             Intent targetIntent = new Intent(GameListActivity.this, LoginActivity.class);
+                            targetIntent.putExtra(EXTRA_USERNAME, Backendless.UserService.CurrentUser().getProperty("username").toString());
                             startActivity(targetIntent);
                         }
                     })
@@ -262,7 +266,6 @@ public class GameListActivity extends AppCompatActivity {
         editTextPlayerSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -274,6 +277,7 @@ public class GameListActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -351,7 +355,7 @@ public class GameListActivity extends AppCompatActivity {
                 Game filterableGame ;
 
                 if (!editTextSearch.getText().toString().isEmpty() && editTextPlayerSearch.getText().toString().isEmpty()){
-                    String filterGameString = constraint.toString().toLowerCase();
+                    String filterGameString = editTextSearch.getText().toString().toLowerCase();
 
                     for (int i = 0; i < count; i++) {
                         filterableGame = list.get(i);
@@ -364,11 +368,11 @@ public class GameListActivity extends AppCompatActivity {
                     results.count = nlist.size();
                 }
                 else if (!editTextPlayerSearch.getText().toString().isEmpty() && editTextSearch.getText().toString().isEmpty()){
-                    int filterGameInt = parseInt(constraint.toString());
+                    int filterGameInt = parseInt(editTextPlayerSearch.getText().toString());
 
                     for (int i = 0; i < count; i++) {
                         filterableGame = list.get(i);
-                        if (filterableGame.getMinPlayer() <= filterGameInt && filterableGame.getMaxPlayer() >= filterGameInt) {
+                        if ((filterableGame.getMinPlayer() <= filterGameInt) && (filterableGame.getMaxPlayer() >= filterGameInt)) {
                             nlist.add(filterableGame);
                         }
                     }
@@ -377,12 +381,12 @@ public class GameListActivity extends AppCompatActivity {
                     results.count = nlist.size();
                 }
                 else if (!editTextSearch.getText().toString().isEmpty() && !editTextPlayerSearch.getText().toString().isEmpty()){
-                    int filterGameInt = parseInt(constraint.toString());
-                    String filterGameString = constraint.toString().toLowerCase();
+                    int filterGameInt = parseInt(editTextPlayerSearch.getText().toString());
+                    String filterGameString = editTextSearch.getText().toString().toLowerCase();
 
                     for (int i = 0; i < count; i++) {
                         filterableGame = list.get(i);
-                        if (filterableGame.getMinPlayer() <= filterGameInt && filterableGame.getMaxPlayer() >= filterGameInt && filterableGame.getName().toLowerCase().contains(filterGameString)) {
+                        if ((filterableGame.getMinPlayer() <= filterGameInt) && (filterableGame.getMaxPlayer() >= filterGameInt) && filterableGame.getName().toLowerCase().contains(filterGameString)) {
                             nlist.add(filterableGame);
                         }
                     }
@@ -427,10 +431,10 @@ public class GameListActivity extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(GameListActivity.this);
 
-                builder.setMessage("Delete \"" + fullGameList.get(index).getName() + "\"?")
+                builder.setMessage("Delete \"" + gameAdapter.gamesList.get(index).getName() + "\"?")
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                Backendless.Persistence.of(Game.class).remove(fullGameList.get(index), new AsyncCallback<Long>() {
+                                Backendless.Persistence.of(Game.class).remove(gameAdapter.gamesList.get(index), new AsyncCallback<Long>() {
                                     @Override
                                     public void handleResponse(Long response) {
                                         gameAdapter.gamesList.remove(index);
